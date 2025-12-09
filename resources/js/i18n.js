@@ -17,11 +17,10 @@ const {messages} = loadMessages();
 
 const i18n = createI18n({
     legacy: false,
-    locale: "en",
-    fallbackLocale: "en",
+    locale: "ar",
+    fallbackLocale: "ar",
     messages: messages
 });
 
 export default i18n;
-
 

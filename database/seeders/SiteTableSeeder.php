@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Enums\Activity;
 use App\Enums\CurrencyPosition;
 use App\Models\Currency;
+use App\Models\Language;
 use Dipokhalder\EnvEditor\EnvEditor;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
@@ -21,6 +22,9 @@ class SiteTableSeeder extends Seeder
     public function run()
     {
         $envService = new EnvEditor();
+        $arabic = Language::where('code', 'ar')->first();
+        $defaultLanguageId = $arabic ? $arabic->id : 1;
+
         Settings::group('site')->set([
             'site_date_format'               => 'd-m-Y',
             'site_time_format'               => 'h:i A',
@@ -32,7 +36,7 @@ class SiteTableSeeder extends Seeder
             'site_digit_after_decimal_point' => '2',
             'site_email_verification'        => Activity::ENABLE,
             'site_phone_verification'        => Activity::DISABLE,
-            'site_default_language'          => 1,
+            'site_default_language'          => $defaultLanguageId,
             'site_google_map_key'            => $envService->getValue(
                 'DEMO'
             ) ? 'Fake-map-key' : '',

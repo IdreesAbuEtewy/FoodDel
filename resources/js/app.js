@@ -30,7 +30,7 @@ const options = {
     hideProgressBar: false,
     closeButton: "button",
     icon: true,
-    rtl: false
+    rtl: true
 };
 /* End tooltip alert code */
 
@@ -39,7 +39,7 @@ const options = {
 const API_URL = ENV.API_URL;
 const API_KEY = ENV.API_KEY;
 
-axios.defaults.baseURL = API_URL + '/api';
+axios.defaults.baseURL = '/api';
 axios.interceptors.request.use(
     config => {
         config.headers['x-api-key'] = API_KEY;
