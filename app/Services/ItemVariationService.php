@@ -9,6 +9,7 @@ use App\Models\ItemVariation;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\ItemVariationRequest;
 
 class ItemVariationService
@@ -46,7 +47,7 @@ class ItemVariationService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -110,7 +111,7 @@ class ItemVariationService
             return collect($array);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -123,7 +124,7 @@ class ItemVariationService
             return ItemVariation::create($request->validated() + ['item_id' => $item->id]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -139,7 +140,7 @@ class ItemVariationService
             return $itemVariation;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -156,7 +157,7 @@ class ItemVariationService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -170,7 +171,7 @@ class ItemVariationService
             return ItemVariation::where(['item_id' => $item->id, 'id' => $itemVariation->id])->first();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 

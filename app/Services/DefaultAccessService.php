@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use App\Models\DefaultAccess;
 use Exception;
-use Illuminate\Support\Facades\Auth;
+use App\Models\DefaultAccess;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use App\Libraries\QueryExceptionLibrary;
 
 class DefaultAccessService
 {
@@ -25,7 +26,7 @@ class DefaultAccessService
             return $array;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -50,7 +51,7 @@ class DefaultAccessService
             return $this->show();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

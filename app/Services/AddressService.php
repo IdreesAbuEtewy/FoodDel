@@ -2,13 +2,13 @@
 
 namespace App\Services;
 
-
-use App\Http\Requests\PaginateRequest;
 use Exception;
 use App\Models\Address;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AddressRequest;
+use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class AddressService
 {
@@ -38,7 +38,7 @@ class AddressService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
 
     }
@@ -52,7 +52,7 @@ class AddressService
             return Address::create($request->validated() + ['user_id' => Auth::user()->id]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -65,7 +65,7 @@ class AddressService
             return tap($address)->update($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -78,7 +78,7 @@ class AddressService
             $address->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

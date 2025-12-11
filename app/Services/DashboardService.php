@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Libraries\AppLibrary;
 use App\Enums\Role as EnumRole;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 
 class DashboardService
 {
@@ -48,7 +49,7 @@ class DashboardService
             return $orderStatisticsArray;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -89,7 +90,7 @@ class DashboardService
             return $orderSummaryArray;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -174,7 +175,7 @@ class DashboardService
             return User::withCount('orders')->orderBy('orders_count', 'desc')->role(EnumRole::CUSTOMER)->limit(8)->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -184,7 +185,7 @@ class DashboardService
             return Order::where('payment_status', PaymentStatus::PAID)->sum('total');
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -194,7 +195,7 @@ class DashboardService
             return Order::where('status', OrderStatus::DELIVERED)->count();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -204,7 +205,7 @@ class DashboardService
             return User::role(EnumRole::CUSTOMER)->count();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -214,7 +215,7 @@ class DashboardService
             return Item::count();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

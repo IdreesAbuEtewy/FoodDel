@@ -4,15 +4,16 @@ namespace App\Services;
 
 
 
-use Carbon\Carbon;
 use Exception;
+use Carbon\Carbon;
 use App\Models\Coupon;
-use App\Libraries\AppLibrary;
 use App\Models\OrderCoupon;
+use App\Libraries\AppLibrary;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CouponRequest;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\CouponCheckRequest;
 
 class CouponService
@@ -74,7 +75,7 @@ class CouponService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -108,7 +109,7 @@ class CouponService
             return $this->coupon;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -145,7 +146,7 @@ class CouponService
             return $this->coupon;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -158,7 +159,7 @@ class CouponService
             $coupon->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -171,7 +172,7 @@ class CouponService
             return $coupon;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -188,7 +189,7 @@ class CouponService
             });
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -220,7 +221,7 @@ class CouponService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

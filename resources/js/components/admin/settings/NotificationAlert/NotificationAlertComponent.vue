@@ -29,17 +29,24 @@
                 <form class="row" @submit.prevent="save(notificationAlert.slug, index)"
                     :id="'formElem_' + notificationAlert.slug + index">
                     <div class="col-12 xl:col-6" v-for="notification in notificationAlerts" :key="notification">
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-between gap-4 mb-3"> 
                             <label class="capitalize text-sm text-heading">{{ notification.name }}</label>
-                            <div class="custom-switch">
-                                <input @click="selectCheckbox($event, notificationAlert.slug, notification.id)"
-                                    :id="notificationAlert.slug + notification.id" type="checkbox"
-                                    :value="notification.mail" :name="notificationAlert.slug + notification.id"
-                                    :checked="notification.mail === enums.switchEnum.ON">
-                                <label v-if="notification.mail === enums.switchEnum.ON"
-                                    :for="notificationAlert.slug + notification.id">{{ $t('label.on') }}</label>
-                                <label v-else :for="notificationAlert.slug + notification.id">{{ $t('label.off')
-                                    }}</label>
+                            <div class="relative inline-block w-16 h-3 custom-switch">
+                                <input 
+                                    @click="selectCheckbox($event, notificationAlert.slug, notification.id)"
+                                    :id="notificationAlert.slug + notification.id" 
+                                    type="checkbox" 
+                                    class="peer" 
+                                    :value="notification.mail" 
+                                    :name="notificationAlert.slug + notification.id"
+                                    :checked="notification.mail === enums.switchEnum.ON"
+                                />
+                                <span class="btn peer-checked:ltr:translate-x-3 peer-checked:rtl:-translate-x-3"></span>
+                                <label 
+                                    :for="notificationAlert.slug + notification.id" 
+                                    class="absolute top-0 ltr:ml-3 rtl:mr-3">
+                                    {{ $t('label.off') }}
+                                </label>
                             </div>
                         </div>
                         <textarea :name="notification.id"
@@ -58,17 +65,24 @@
                 <form class="row" @submit.prevent="save(notificationAlert.slug, index)"
                     :id="'formElem_' + notificationAlert.slug + index">
                     <div class="col-12 xl:col-6" v-for="notification in notificationAlerts" :key="notification">
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-start gap-4 mb-3"> 
                             <label class="capitalize text-sm text-heading">{{ notification.name }}</label>
-                            <div class="custom-switch">
-                                <input @click="selectCheckbox($event, notificationAlert.slug, notification.id)"
-                                    :id="notificationAlert.slug + notification.id" type="checkbox"
-                                    :value="notification.sms" :name="notificationAlert.slug + notification.id"
-                                    :checked="notification.sms === enums.switchEnum.ON">
-                                <label v-if="notification.sms === enums.switchEnum.ON"
-                                    :for="notificationAlert.slug + notification.id">{{ $t('label.on') }}</label>
-                                <label v-else :for="notificationAlert.slug + notification.id">{{ $t('label.off')
-                                    }}</label>
+                            <div class="relative inline-block w-11 h-5 custom-switch">
+                                <input 
+                                    @click="selectCheckbox($event, notificationAlert.slug, notification.id)"
+                                    :id="notificationAlert.slug + notification.id" 
+                                    type="checkbox" 
+                                    class="peer" 
+                                    :value="notification.mail" 
+                                    :name="notificationAlert.slug + notification.id"
+                                    :checked="notification.mail === enums.switchEnum.ON"
+                                />
+                                <span class="btn peer-checked:translate-x-6"></span>
+                                <label 
+                                    :for="notificationAlert.slug + notification.id" 
+                                    class="absolute left-14 top-0">
+                                    {{ $t('label.off') }}
+                                </label>
                             </div>
                         </div>
                         <textarea :name="notification.id"
@@ -87,18 +101,24 @@
                 <form class="row" @submit.prevent="save(notificationAlert.slug, index)"
                     :id="'formElem_' + notificationAlert.slug + index">
                     <div class="col-12 xl:col-6" v-for="notification in notificationAlerts" :key="notification">
-                        <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center justify-start gap-4 mb-3"> 
                             <label class="capitalize text-sm text-heading">{{ notification.name }}</label>
-                            <div class="custom-switch">
-                                <input @click="selectCheckbox($event, notificationAlert.slug, notification.id)"
-                                    :id="notificationAlert.slug + notification.id" type="checkbox"
-                                    :value="notification.push_notification"
+                            <div class="relative inline-block w-11 h-5 custom-switch">
+                                <input 
+                                    @click="selectCheckbox($event, notificationAlert.slug, notification.id)"
+                                    :id="notificationAlert.slug + notification.id" 
+                                    type="checkbox" 
+                                    class="peer" 
+                                    :value="notification.mail" 
                                     :name="notificationAlert.slug + notification.id"
-                                    :checked="notification.push_notification === enums.switchEnum.ON">
-                                <label v-if="notification.push_notification === enums.switchEnum.ON"
-                                    :for="notificationAlert.slug + notification.id">{{ $t('label.on') }}</label>
-                                <label v-else :for="notificationAlert.slug + notification.id">{{ $t('label.off')
-                                    }}</label>
+                                    :checked="notification.mail === enums.switchEnum.ON"
+                                />
+                                <span class="btn peer-checked:translate-x-6"></span>
+                                <label 
+                                    :for="notificationAlert.slug + notification.id" 
+                                    class="absolute left-14 top-0">
+                                    {{ $t('label.off') }}
+                                </label>
                             </div>
                         </div>
                         <textarea :name="notification.id"
@@ -180,10 +200,10 @@ export default {
             const inputElement = document.getElementById(slug + id);
             if (e.target.checked) {
                 inputElement.value = 5;
-                inputElement.nextElementSibling.innerText = this.$t('label.on');
+                inputElement.nextElementSibling.nextElementSibling.innerText = this.$t('label.on');
             } else {
                 inputElement.value = 10;
-                inputElement.nextElementSibling.innerText = this.$t('label.off');
+                inputElement.nextElementSibling.nextElementSibling.innerText = this.$t('label.off');
             }
         },
         save: function (slug, index) {

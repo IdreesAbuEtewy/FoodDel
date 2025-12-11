@@ -8,7 +8,7 @@
         --primary: 255 0 107;
         --primary-slate: 255 59 142;
         --primary-light: 255 237 244;
-        --client-font: 'Rubik', sans-serif;
+        --client-font: 'Public Sans', sans-serif;
         --admin-font: 'Public Sans', sans-serif;
     }
 
@@ -22,7 +22,7 @@
     textarea {
         @apply
         placeholder:text-sm placeholder:text-placeholder
-        focus-within:outline-0 bg-transparent text-[15px]
+        focus-within:outline-none bg-transparent text-[15px]
     }
 
     h1,
@@ -32,7 +32,7 @@
     h5,
     h6 { @apply text-heading; font-style: initial; }
 
-    body { @apply text-base font-normal font-rubik scroll-smooth text-paragraph bg-white }
+    body { @apply text-base font-normal font-public scroll-smooth text-paragraph bg-white }
 }
 
 @layer components {
@@ -50,6 +50,25 @@
     .col-10 { @apply w-4/5 p-3 }
     .col-11 { @apply w-5/6 p-3 }
     .col-12 { @apply w-full p-3 }
+
+    .ql-editor h1 {
+    @apply text-4xl font-bold mb-4;
+    }
+    .ql-editor h2 {
+    @apply text-3xl font-semibold mb-3;
+    }
+    .ql-editor h3 {
+    @apply text-2xl font-semibold mb-2;
+    }
+    .ql-editor h4 {
+    @apply text-xl font-medium mb-2;
+    }
+    .ql-editor h5 {
+    @apply text-lg font-medium mb-1;
+    }
+    .ql-editor h6 {
+    @apply text-base font-medium mb-1;
+    }
 
     .form-row { @apply flex flex-wrap -mx-1 -my-2 }
     .form-col-1 { @apply w-1/6 px-1 py-2 }
@@ -85,7 +104,7 @@
     .db-header-profile-dropdown-menu { @apply flex items-center justify-start gap-2.5 w-full whitespace-nowrap pl-3 pr-8 py-1.5 text-sm rounded-md capitalize transition text-gray-600 hover:bg-gray-100 }
 
     /* SIDEBAR */
-    .db-sidebar { @apply fixed top-0 ltr:left-0 rtl:right-0 z-[39] w-[260px] p-4 h-screen ltr:-translate-x-[100%] rtl:translate-x-full ltr:lg:translate-x-0 rtl:lg:-translate-x-0 lg:top-16 lg:h-[calc(100vh_-_64px)] overflow-y-auto thin-scrolling ltr:shadow-db-sidebar-right rtl:shadow-db-sidebar-left transition bg-white }
+    .db-sidebar { @apply fixed top-0 ltr:left-0 rtl:right-0 z-[39] w-[260px] p-4 h-dvh ltr:-translate-x-[100%] rtl:translate-x-full ltr:lg:translate-x-0 rtl:lg:-translate-x-0 lg:top-16 lg:h-[calc(100vh_-_64px)] overflow-y-auto thin-scrolling ltr:shadow-db-sidebar-right rtl:shadow-db-sidebar-left transition bg-white }
     .db-sidebar.active { @apply ltr:translate-x-0 rtl:-translate-x-0 ltr:lg:-translate-x-[100%] rtl:lg:translate-x-full shadow-sidebar lg:shadow-none }
     .db-sidebar-header { @apply flex lg:hidden items-center justify-between mb-8 }
     .db-sidebar-nav { @apply mb-6 last:mb-0 }
@@ -227,6 +246,9 @@
     .thin-scrolling:hover::-webkit-scrollbar-thumb { @apply bg-primary }
     .thin-scrolling::-webkit-scrollbar { @apply w-[3px] }
     .thin-scrolling::-webkit-scrollbar { @apply rounded-2xl bg-transparent }
+    .thin-scrolling {
+        scrollbar-color: rgb(255 0 107);
+    }
 
     /* OTHER */
     .db-image { @apply w-full rounded-[10px] border-[5px] border-white shadow }
@@ -353,13 +375,8 @@
     input:checked + div { @apply border-primary }
     input:checked + div svg { @apply block }
 
-    .custom-switch { @apply inline-flex items-center justify-center cursor-pointer }
-    .custom-switch input { @apply relative w-5 h-3 cursor-pointer
-                                before:content-[''] before:inline-block before:absolute before:inset-0 before:w-full before:h-full before:rounded-3xl before:bg-paragraph before:transition-all before:duration-300
-                                after:content-[''] after:absolute after:top-1/2 after:left-[30%] after:-translate-y-1/2 after:-translate-x-1/2 after:w-1.5 after:h-1.5 after:rounded-full after:bg-white after:transition-all after:duration-300 }
-    .custom-switch input:checked { @apply before:bg-primary after:left-[70%] }
-    .custom-switch label { @apply cursor-pointer ltr:pl-2 rtl:pr-2 text-sm uppercase text-paragraph transition-all duration-300 }
-    .custom-switch input:checked + label { @apply text-primary }
+    .custom-switch input {@apply appearance-none w-6 h-3 bg-[#6e7191] rounded-full checked:bg-primary cursor-pointer transition-colors duration-300}
+    .custom-switch .btn {@apply absolute top-2 ltr:left-0.5 rtl:right-0.5 w-1.5 h-1.5 bg-white rounded-full border border-slate-300 shadow-sm transition-transform duration-300 cursor-pointer pointer-events-none}
 
     .custom-checkbox { @apply relative w-4 h-4 cursor-pointer }
     .custom-checkbox-field { @apply absolute z-10 opacity-0 w-full h-full appearance-none cursor-pointer }

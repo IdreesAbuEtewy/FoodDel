@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Requests\CookiesRequest;
-use App\Http\Requests\CookiesSetRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\CookiesRequest;
+use App\Http\Requests\CookiesSetRequest;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class CookiesService
@@ -21,7 +22,7 @@ class CookiesService
             return Settings::group('cookies')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -37,7 +38,7 @@ class CookiesService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 

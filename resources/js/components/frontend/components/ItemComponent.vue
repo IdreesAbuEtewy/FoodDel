@@ -7,8 +7,8 @@
             <div class="product-card-list-content-group">
                 <div class="product-card-list-header-group">
                     <h3 class="product-card-list-title">{{ textShortener(item.name, 25) }}</h3>
-                    <button class="product-card-list-info-btn info-btn leading-none" data-modal="#item-info-modal"
-                        @click.prevent="infoModalShow(item.name, item.caution)">
+                    <button v-if="item.caution" class="product-card-list-info-btn info-btn leading-none"
+                        data-modal="#item-info-modal" @click.prevent="infoModalShow(item.name, item.caution)">
                         <i class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i>
                     </button>
                 </div>
@@ -41,7 +41,7 @@
             <div class="product-card-grid-content-group">
                 <div class="product-card-grid-header-group">
                     <h3 class="product-card-grid-title">{{ textShortener(item.name, 26) }}</h3>
-                    <button type="button" class="product-card-grid-info-btn info-btn leading-none"
+                    <button v-if="item.caution" type="button" class="product-card-grid-info-btn info-btn leading-none"
                         data-modal="#item-info-modal" @click.prevent="infoModalShow(item.name, item.caution)">
                         <i class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i>
                     </button>
@@ -70,7 +70,7 @@
     <!--========INFO PART START=========-->
     <div id="item-info-modal" ref="itemInfoModal" class="modal ff-modal info-modal">
         <div class="modal-dialog" v-if="itemInfo">
-            <div class="modal-header">
+            <div class="modal-header flex items-start gap-3">
                 <h3 class="modal-title text-base font-medium">{{ itemInfo.name }}</h3>
                 <button class="modal-close fa-regular fa-circle-xmark" @click.prevent="infoModalHide"></button>
             </div>
@@ -91,8 +91,8 @@
                     <div class="flex-auto">
                         <div class="flex items-start gap-2 mb-1">
                             <h3 class="text-sm font-semibold capitalize">{{ item.name }}</h3>
-                            <button type="button" class="info-btn mt-0.5 leading-none" data-modal="#item-info-modal"
-                                @click.prevent="infoModalShow(item.name, item.caution)">
+                            <button v-if="item.caution" type="button" class="info-btn mt-0.5 leading-none"
+                                data-modal="#item-info-modal" @click.prevent="infoModalShow(item.name, item.caution)">
                                 <i class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i>
                             </button>
                         </div>
@@ -235,12 +235,11 @@
                                     </div>
                                     <div
                                         class="flex flex-col items-end justify-between h-full absolute top-0 ltr:right-0 rtl:left-0 z-10 p-2">
-                                        <button type="button" class="info-btn leading-none"
-                                            data-modal="#item-info-modal"
-                                            @click.prevent="infoModalShow(addon.addon_item_name, addon.caution)">
-                                            <i
-                                                class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i>
-                                        </button>
+                                        <div>
+                                            <button v-if="addon.caution" type="button" class="info-btn leading-none" data-modal="#item-info-modal" @click.prevent="infoModalShow(addon.addon_item_name, addon.caution)">
+                                                <i class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i>
+                                            </button>
+                                        </div>
 
                                         <div class="flex items-center indec-group">
                                             <button @click.prevent="addonQuantityDecrement(addon.id)"
@@ -265,6 +264,7 @@
                     </h3>
                     <textarea v-model="temp.instruction" :placeholder="$t('message.add_note')"
                         class="h-12 w-full rounded-lg border py-1.5 px-2 placeholder:text-[10px] placeholder:text-[#6E7191] border-[#D9DBE9]"></textarea>
+                    <small class="db-field-alert" v-if="instructionError">{{ instructionError }}</small>
                 </div>
                 <button type="button" :disabled="temp.total_price <= 0" @click.prevent="addToCart"
                     class="flex items-center justify-center gap-3 rounded-3xl text-base py-3 px-3 font-medium w-full text-white bg-primary">
@@ -341,6 +341,7 @@ export default {
                 total_price: 0,
                 instruction: "",
             },
+            instructionError: ""
         }
     },
     computed: {
@@ -681,6 +682,17 @@ export default {
                 }).catch();
             }
         },
+    },
+    watch: {
+        'temp.instruction'(val) {
+            if (val.length > 190) {
+                this.temp.instruction = val.slice(0, 190);
+                this.instructionError = this.$t("message.special_instructions_limit");
+            }
+            if (val.length < 190) {
+                this.instructionError = "";
+            }
+        }
     }
 }
 </script>

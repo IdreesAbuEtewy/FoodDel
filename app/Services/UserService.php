@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 
 class UserService
@@ -46,7 +47,7 @@ class UserService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

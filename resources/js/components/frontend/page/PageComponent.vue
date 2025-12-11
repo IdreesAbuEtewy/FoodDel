@@ -6,7 +6,7 @@
                 <div v-if="page.image" class="w-full mb-6">
                     <img :src="page.image" alt="image">
                 </div>
-                <p v-html="page.description" class="text-xs text-heading !whitespace-pre-wrap"> </p>
+                <div class="ql-editor" v-html="page.description"></div>
             </div>
             <TemplateManagerComponent :templateId="page.template_id" />
             <div class="mb-12 md:mb-20">
@@ -48,6 +48,7 @@
 import TemplateManagerComponent from "../components/TemplateManagerComponent";
 import ContactUsFormComponent from "./ContactUsFormComponent";
 import ENV from "../../../config/env";
+import 'vue3-quill/lib/vue3-quill.css';
 
 export default {
     name: "PageComponent",

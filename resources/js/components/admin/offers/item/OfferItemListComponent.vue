@@ -33,6 +33,12 @@
             </table>
         </div>
     </div>
+    <div class="p-4 text-center" v-else>
+        <div class="max-w-[300px] mx-auto mt-2">
+            <img class="w-full h-full" :src="ENV.API_URL + '/images/default/not-found.png'" alt="Not Found">
+        </div>
+        <span class="d-block mt-3 text-lg">{{ $t('message.no_data_available') }}</span>
+    </div>
 </template>
 
 <script>
@@ -43,6 +49,7 @@ import appService from "../../../../services/appService";
 import SmIconDeleteComponent from "../../components/buttons/SmIconDeleteComponent";
 import SmIconModalEditComponent from "../../components/buttons/SmIconModalEditComponent";
 import OfferItemCreateComponent from "./OfferItemCreateComponent";
+import ENV from '../../../../config/env';
 
 export default {
     name: "OfferItemListComponent",
@@ -76,6 +83,7 @@ export default {
                     order_type: 'desc',
                 }
             },
+            ENV: ENV
         }
     },
     mounted() {

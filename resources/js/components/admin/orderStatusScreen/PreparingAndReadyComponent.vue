@@ -1,6 +1,6 @@
 <template>
   <LoadingContentComponent :props="loading" />
-  <div class="col-span-1 customer-screen db-card rounded-[10px] h-screen md:h-[calc(100vh-117px)] overflow-hidden">
+  <div class="col-span-1 customer-screen db-card rounded-[10px] h-screen md:h-[calc(100dvh-117px)] overflow-hidden">
     <h3 class="text-lg font-semibold text-white p-3 pb-2 bg-primary mb-2 rounded-t-[10px] text-center">{{
       $t("label.preparing") }}
     </h3>
@@ -11,7 +11,7 @@
       </ul>
     </div>
   </div>
-  <div class="col-span-1 customer-screen db-card rounded-[10px] h-screen md:h-[calc(100vh-117px)] overflow-hidden">
+  <div class="col-span-1 customer-screen db-card rounded-[10px] h-screen md:h-[calc(100dvh-117px)] overflow-hidden">
     <h3 class="text-lg font-semibold text-white p-3 pb-2 bg-[#1AB759] mb-2 rounded-t-[10px] text-center">{{
       $t("label.ready") }}</h3>
     <div class="content-wrapper p-3 overflow-auto thin-scrolling h-full">

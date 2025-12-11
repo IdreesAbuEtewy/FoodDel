@@ -242,6 +242,11 @@ export default {
                     to_date: "",
                 }
             },
+            itemSearch: {
+                paginate: 0,
+                order_column: 'id',
+                order_type: 'asc'
+            },
             ENV: ENV
         }
     },
@@ -249,7 +254,7 @@ export default {
         this.list();
         this.loading.isActive = true;
         this.props.search.page = 1;
-        this.$store.dispatch('item/lists', this.props.search).then(res => {
+        this.$store.dispatch('item/lists', this.itemSearch).then(res => {
             this.loading.isActive = false;
         }).catch((err) => {
             this.loading.isActive = false;

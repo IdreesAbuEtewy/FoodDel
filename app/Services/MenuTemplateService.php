@@ -7,6 +7,7 @@ use Exception;
 use App\Models\MenuTemplate;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\MenuTemplateRequest;
 
 class MenuTemplateService
@@ -51,7 +52,7 @@ class MenuTemplateService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -64,7 +65,7 @@ class MenuTemplateService
             return MenuTemplate::create($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -78,7 +79,7 @@ class MenuTemplateService
             return $menuTemplate;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -91,7 +92,7 @@ class MenuTemplateService
             $menuTemplate->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -104,7 +105,7 @@ class MenuTemplateService
             return $menuTemplate;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

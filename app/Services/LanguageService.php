@@ -3,15 +3,16 @@
 namespace App\Services;
 
 
-use App\Http\Requests\LanguageFileTextGetRequest;
-use App\Libraries\AppLibrary;
 use Exception;
 use App\Models\Language;
 use Illuminate\Http\Request;
+use App\Libraries\AppLibrary;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\LanguageRequest;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
+use App\Http\Requests\LanguageFileTextGetRequest;
 
 
 class LanguageService
@@ -45,7 +46,7 @@ class LanguageService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -79,7 +80,7 @@ class LanguageService
             return $language;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -97,7 +98,7 @@ class LanguageService
             return $language;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -120,7 +121,7 @@ class LanguageService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -133,7 +134,7 @@ class LanguageService
             return $language;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -172,7 +173,7 @@ class LanguageService
             return collect($array);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -214,7 +215,7 @@ class LanguageService
             fclose($file);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

@@ -89,6 +89,7 @@ return [
         'resource_already_used'       => 'Cannot remove this resource permanently. It is related with another resource.',
         'coupon_limit_exceeded'       => 'The coupon limit has been exceeded',
         'guest_login_is_not_allowed'  => 'The guest login is not allowed.',
-        'out_of_service_area'         => 'Sorry, this address is outside of our service area.'
+        'out_of_service_area'         => 'Sorry, this address is outside of our service area.',
+        'database_error_message'      => 'A database error occurred.'
     ]
 ];

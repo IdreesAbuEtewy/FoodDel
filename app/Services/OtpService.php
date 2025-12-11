@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use App\Http\Requests\OtpRequest;
 use Exception;
+use App\Http\Requests\OtpRequest;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class OtpService
@@ -19,7 +20,7 @@ class OtpService
             return Settings::group('otp')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -35,7 +36,7 @@ class OtpService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

@@ -3,11 +3,12 @@
 namespace App\Services;
 
 use Exception;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\ProfileRequest;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\ChangeImageRequest;
 use App\Http\Requests\ChangePasswordRequest;
-use App\Models\User;
 
 class ProfileService
 {
@@ -32,7 +33,7 @@ class ProfileService
             return $user;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -50,7 +51,7 @@ class ProfileService
             return $user;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -66,7 +67,7 @@ class ProfileService
             return $user;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

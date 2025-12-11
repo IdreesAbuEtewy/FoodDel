@@ -155,7 +155,7 @@
                                 <td class="pt-1 pb-1 pr-1">{{ $t('label.customer') }}:</td>
                                 <td class="pt-1 pb-1">{{ orderUser.name }}</td>
                             </tr>
-                            <tr>
+                            <tr v-if="orderUser.phone">
                                 <td class="pt-1 pb-1 pr-1">{{ $t('label.phone') }}:</td>
                                 <td class="pt-1 pb-1">{{ orderUser.country_code + '' + orderUser.phone }}</td>
                             </tr>

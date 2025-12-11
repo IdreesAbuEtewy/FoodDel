@@ -168,7 +168,8 @@
                                                 <span
                                                     v-for="(variation, variationName, index) in cart.item_variations.names">
                                                     {{ variationName }}: {{ variation }}
-                                                    <span v-if="index + 1 < cart.item_variations.names.length">,
+                                                    <span
+                                                        v-if="index + 1 < Object.keys(cart.item_variations.names).length">,
                                                         &nbsp;</span>
                                                 </span>
                                             </p>

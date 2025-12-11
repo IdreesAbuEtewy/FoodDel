@@ -19,23 +19,18 @@ class PaymentGatewayTableSeederVersionTwo extends Seeder
 
     public array $gateways = [
         [
-            "name"    => "Midtrans",
-            "slug"    => "midtrans",
+            "name"    => "MyFatoorah",
+            "slug"    => "myfatoorah",
             "misc"    => null,
             "status"  => Activity::DISABLE,
             "options" => [
                 [
-                    "option"     => 'midtrans_server_key',
+                    "option"     => 'myfatoorah_api_key',
                     "type"       => InputType::TEXT,
                     "activities" => ''
                 ],
                 [
-                    "option"     => 'midtrans_client_key',
-                    "type"       => InputType::TEXT,
-                    "activities" => ''
-                ],
-                [
-                    "option"     => 'midtrans_mode',
+                    "option"     => 'myfatoorah_mode',
                     "type"       => InputType::SELECT,
                     "activities" => [
                         GatewayMode::SANDBOX => 'sandbox',
@@ -43,7 +38,52 @@ class PaymentGatewayTableSeederVersionTwo extends Seeder
                     ]
                 ],
                 [
-                    "option"     => 'midtrans_status',
+                    "option"     => 'myfatoorah_status',
+                    "value"      => Activity::DISABLE,
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        Activity::ENABLE  => "enable",
+                        Activity::DISABLE => "disable",
+                    ]
+                ],
+            ]
+        ],
+        [
+            "name"    => "EasyPaisa",
+            "slug"    => "easypaisa",
+            "misc"    => null,
+            "status"  => Activity::DISABLE,
+            "options" => [
+                [
+                    "option"     => 'easypaisa_store_id',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_hash_key',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_username',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_password',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_mode',
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        GatewayMode::SANDBOX => 'sandbox',
+                        GatewayMode::LIVE    => 'live'
+                    ]
+                ],
+                [
+                    "option"     => 'easypaisa_status',
                     "value"      => Activity::DISABLE,
                     "type"       => InputType::SELECT,
                     "activities" => [

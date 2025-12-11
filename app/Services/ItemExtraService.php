@@ -9,6 +9,7 @@ use App\Models\ItemExtra;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\ItemExtraRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class ItemExtraService
 {
@@ -43,7 +44,7 @@ class ItemExtraService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -56,7 +57,7 @@ class ItemExtraService
             return ItemExtra::create($request->validated() + ['item_id' => $item->id]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -73,7 +74,7 @@ class ItemExtraService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -90,7 +91,7 @@ class ItemExtraService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -107,7 +108,7 @@ class ItemExtraService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

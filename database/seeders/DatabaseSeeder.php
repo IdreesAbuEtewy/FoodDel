@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanyTableSeeder::class);
         $this->call(SiteTableSeeder::class);
         $this->call(PaymentGatewayTableSeederVersionOne::class);
-        $this->call(PaymentGatewayTableSeederVersionTwo::class);
         $this->call(SmsGatewayTableSeederVersionOne::class);
         $this->call(LanguageTableSeeder::class);
         $this->call(CurrencyTableSeeder::class);

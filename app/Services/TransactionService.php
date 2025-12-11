@@ -4,9 +4,10 @@ namespace App\Services;
 
 
 use Exception;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
-use App\Models\Transaction;
+use App\Libraries\QueryExceptionLibrary;
 
 class TransactionService
 {
@@ -60,7 +61,7 @@ class TransactionService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

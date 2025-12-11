@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\Enums\Role as EnumsRole;
-use App\Http\Requests\PaginateRequest;
-use App\Http\Requests\RoleRequest;
 use Exception;
-use Illuminate\Support\Facades\Log;
+use App\Enums\Role as EnumsRole;
+use App\Http\Requests\RoleRequest;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class RoleService
 {
@@ -53,7 +54,7 @@ class RoleService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -66,7 +67,7 @@ class RoleService
             return Role::create($request->validated() + ['guard_name' => 'sanctum']);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -79,7 +80,7 @@ class RoleService
             return tap($role)->update($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -96,7 +97,7 @@ class RoleService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -109,7 +110,7 @@ class RoleService
             return $role;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

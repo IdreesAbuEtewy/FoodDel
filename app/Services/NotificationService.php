@@ -7,6 +7,7 @@ use App\Libraries\AppLibrary;
 use App\Models\NotificationSetting;
 use Illuminate\Support\Facades\Log;
 use Dipokhalder\EnvEditor\EnvEditor;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 use App\Http\Requests\NotificationRequest;
 
@@ -28,7 +29,7 @@ class NotificationService
             return Settings::group('notification')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -55,7 +56,7 @@ class NotificationService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

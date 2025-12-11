@@ -616,7 +616,21 @@
         "mark_done": "Mark Done",
         "schedule": "Schedule",
         "online": "Online",
-        "delivery_zone": "Delivery Zone"
+        "delivery_zone": "Delivery Zone",
+        "order_payment": "Order Payment",
+        "total_amount": "Total Amount",
+        "select_payment_method": "Select Payment Method",
+        "phonepe_client_id": "Phonepe client id",
+        "phonepe_secret_key": "Phonepe secret key",
+        "myfatoorah_api_key": "MyFatoorah API Key",
+        "myfatoorah_mode": "MyFatoorah Mode",
+        "myfatoorah_status": "MyFatoorah Status",
+        "easypaisa_store_id": "Easypaisa Store ID",
+        "easypaisa_hash_key": "Easypaisa Hash key",
+        "easypaisa_mode": "Easypaisa mode",
+        "easypaisa_status": "Easypaisa Status",
+        "easypaisa_username": "Easypaisa Username",
+        "easypaisa_password": "Easypaisa Password"
     },
     "button": {
         "add": "Add",
@@ -712,7 +726,8 @@
         "upload_file": "Upload File",
         "pdf": "PDF",
         "add_waiter": "Add Waiter",
-        "add_chef": "Add Chef"
+        "add_chef": "Add Chef",
+        "confirm_and_print": "Confirm & Print Reciept"
     },
     "number": {
         "10": "10",
@@ -784,6 +799,8 @@
         "no_schedule_found": "No schedule found.",
         "no_orders_found": "You don't have any orders yet! Let's get something delicious started.",
         "no_items_found": "No items matched your search! Try different keywords.",
-        "no_data_available": "No data available."
+        "no_data_available": "No data available.",
+        "payment_method": "The payment method is required.",
+        "special_instructions_limit": "Special instructions limit is 190 characters."
     }
 }

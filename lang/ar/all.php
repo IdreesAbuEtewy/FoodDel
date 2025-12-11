@@ -89,6 +89,7 @@ return [
         'resource_already_used'       => 'لا يمكن إزالة هذا المورد بشكل دائم. إنه مرتبط بمورد آخر.',
         'coupon_limit_exceeded'       => 'لقد تم تجاوز حد القسيمة',
         'guest_login_is_not_allowed'  => 'لا يسمح بتسجيل الدخول للضيوف',
-        'out_of_service_area'         => 'عذراً، هذا العنوان خارج منطقة خدمتنا'
+        'out_of_service_area'         => 'عذراً، هذا العنوان خارج منطقة خدمتنا',
+        'database_error_message'      => 'حدث خطأ في قاعدة البيانات.'
     ]
 ];

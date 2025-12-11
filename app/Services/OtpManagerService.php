@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use App\Events\SendSmsCode;
 use Exception;
+use Carbon\Carbon;
 use App\Models\Otp;
 use App\Enums\OtpType;
+use App\Events\SendSmsCode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 use App\Http\Requests\VerifyPhoneRequest;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class OtpManagerService
 {
@@ -58,7 +59,7 @@ class OtpManagerService
             return true;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -89,7 +90,7 @@ class OtpManagerService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

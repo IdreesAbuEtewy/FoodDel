@@ -17,10 +17,10 @@
             </div>
             <ItemComponent v-if="hasItems" :items="items.items" :type="itemProps.type" :design="itemProps.design" />
             <div class="mt-12" v-else>
-                <div class="max-w-[250px] mx-auto">
-                    <img class="w-full mb-8" :src="setting.item_not_found" alt="image_order_not_found">
+                <div class="max-w-[300px] mx-auto">
+                    <img class="w-full mb-8" :src="setting.image_order_not_found" alt="image_order_not_found">
                 </div>
-                <span class="w-full mb-4 text-center text-black">{{ $t('message.no_items_found') }}</span>
+                <span class="w-full mb-4 text-center text-black">{{ $t('message.no_data_available') }}</span>
             </div>
         </div>
     </section>

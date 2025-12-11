@@ -89,6 +89,7 @@ return [
         'resource_already_used'       => 'Diese Ressource kann nicht dauerhaft entfernt werden. Es ist mit einer anderen Ressource verknüpft.',
         'coupon_limit_exceeded'       => 'De couponlimiet is overschreden',
         'guest_login_is_not_allowed'  => 'De gastlogin is niet toegestaan.',
-        'out_of_service_area'         => 'Sorry, dit adres ligt buiten ons servicegebied'
+        'out_of_service_area'         => 'Sorry, dit adres ligt buiten ons servicegebied',
+        'database_error_message'      => 'Er is een fout opgetreden in de database.'
     ]
 ];

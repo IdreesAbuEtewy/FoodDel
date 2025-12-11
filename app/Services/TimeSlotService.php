@@ -8,6 +8,7 @@ use App\Models\TimeSlot;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\TimeSlotRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class TimeSlotService
 {
@@ -38,7 +39,7 @@ class TimeSlotService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -67,7 +68,7 @@ class TimeSlotService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -80,7 +81,7 @@ class TimeSlotService
             $timeSlot->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

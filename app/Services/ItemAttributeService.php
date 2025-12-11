@@ -3,12 +3,12 @@
 namespace App\Services;
 
 
-use App\Libraries\QueryExceptionLibrary;
 use Exception;
 use App\Models\ItemAttribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\ItemAttributeRequest;
 
 class ItemAttributeService
@@ -42,7 +42,7 @@ class ItemAttributeService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -59,7 +59,7 @@ class ItemAttributeService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -76,7 +76,7 @@ class ItemAttributeService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -105,7 +105,7 @@ class ItemAttributeService
             return $itemAttribute;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

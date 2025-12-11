@@ -5,11 +5,16 @@
             <div class="w-full sm:w-60 md:w-80 flex-shrink-0 ltr:sm:border-r rtl:sm:border-l border-[#D9DBE9]">
                 <div class="p-4">
                     <h3 class="capitalize text-[22px] leading-[26px] font-semibold mb-6">{{ $t("menu.messages") }}</h3>
-                    <div class="flex items-center w-full h-10 px-3 rounded-lg border bg-[#fcfcfc] border-[#D9DBE9]">
-                        <i class="lab lab-search-normal lab-font-size-16"></i>
-                        <input type="text" v-model="props.search.name" @change="search" placeholder="Search Customer"
+                    <form @submit.prevent="search"
+                        class="flex items-center w-full h-10 px-3 rounded-lg border bg-[#fcfcfc] border-[#D9DBE9]">
+                        <button type="submit">
+                            <i class="lab lab-search-normal lab-font-size-16"></i>
+                        </button>
+                        <input type="text" id="name" v-model="props.search.name" placeholder="Search Customer"
                             class="w-full h-full rounded-r-lg ml-3">
-                    </div>
+                        <button @click.prevent="resetName" type="button" v-if="props.search.name"
+                            class="text-sm text-red-500 fa-regular fa-circle-xmark !ml-2 mr-1"></button>
+                    </form>
                 </div>
                 <ul class="h-[400px] sm:h-[calc(100vh_-_290px)] overflow-y-auto thin-scrolling db-message-list">
                     <li @click="messageList(customer)"
@@ -19,10 +24,10 @@
                         <img class="flex-shrink-0 w-9 rounded" :src="customer.image" alt="avatar">
                         <h4 class="text-sm font-medium leading-4 capitalize">{{
                             customer.name
-                            }}
+                        }}
                             <span class="block mt-2 text-xs font-normal leading-[14px] text-paragraph">{{
                                 customer.phone
-                                }}</span>
+                            }}</span>
                         </h4>
                     </li>
                 </ul>
@@ -34,7 +39,7 @@
                     <h4 class="text-sm font-medium leading-4 capitalize">{{ user.name }}
                         <span class="block mt-2 text-xs font-normal leading-[14px] text-paragraph">{{
                             user.phone
-                            }}</span>
+                        }}</span>
                     </h4>
                 </div>
                 <ul class="chat-list backend">
@@ -193,9 +198,9 @@ export default {
         search: function () {
             this.customerList();
         },
-        clear: function () {
+        resetName: function () {
             this.props.search.name = "";
-            this.list();
+            this.customerList();
         },
         changeImage: function (e) {
             this.image = e.target.files[0];

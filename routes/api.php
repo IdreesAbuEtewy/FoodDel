@@ -239,6 +239,7 @@ Route::prefix('admin')->name('admin.')->middleware(['apiKey', 'auth:sanctum', 'l
             Route::match(['put', 'patch'], '/{branch}', [BranchController::class, 'update']);
             Route::match(['put', 'patch'], '/zone/{branch}', [BranchController::class, 'updateZone']);
             Route::delete('/{branch}', [BranchController::class, 'destroy']);
+            Route::get('/lat-long/{branch}', [BranchController::class, 'showByLatLong']);
         });
 
         Route::prefix('menu-section')->name('menu-section.')->group(function () {

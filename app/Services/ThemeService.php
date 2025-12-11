@@ -3,11 +3,12 @@
 namespace App\Services;
 
 
-use App\Http\Requests\ThemeRequest;
-use App\Models\ThemeSetting;
-use Dipokhalder\EnvEditor\EnvEditor;
 use Exception;
+use App\Models\ThemeSetting;
+use App\Http\Requests\ThemeRequest;
 use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class ThemeService
@@ -28,7 +29,7 @@ class ThemeService
             return Settings::group('theme')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -58,7 +59,7 @@ class ThemeService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

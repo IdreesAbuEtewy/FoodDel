@@ -10,7 +10,7 @@
                     {{ textShortener(item.name, 25) }}</h3>
                 <div class="flex items-center justify-between gap-2">
                     <h4 class="font-rubik">{{ item.offer.length > 0 ? item.offer[0].currency_price : item.currency_price
-                    }}
+                        }}
                     </h4>
                     <button @click.prevent="variationModalShow(item)" data-modal="#item-variation-modal"
                         class="db-product-cart pos-add-button flex items-center gap-1.5 rounded-3xl capitalize text-sm font-medium font-rubik py-1 px-2 shadow-cardCart transition bg-white hover:bg-primary">
@@ -25,7 +25,7 @@
     <!--========INFO PART START=========-->
     <div id="item-info-modal" ref="itemInfoModal" class="modal ff-modal info-modal">
         <div class="modal-dialog" v-if="itemInfo">
-            <div class="modal-header">
+            <div class="modal-header flex items-start gap-3">
                 <h3 class="modal-title text-base font-medium">{{ itemInfo.name }}</h3>
                 <button class="modal-close fa-regular fa-circle-xmark" @click.prevent="infoModalHide"></button>
             </div>
@@ -46,8 +46,8 @@
                     <div class="flex-auto">
                         <div class="flex items-start gap-2 mb-1">
                             <h3 class="text-sm font-semibold capitalize">{{ item.name }}</h3>
-                            <button type="button" class="info-btn mt-0.5" data-modal="#item-info-modal"
-                                @click.prevent="infoModalShow(item.name, item.caution)">
+                            <button v-if="item.caution" type="button" class="info-btn mt-0.5 flex items-start"
+                                data-modal="#item-info-modal" @click.prevent="infoModalShow(item.name, item.caution)">
                                 <i class="lab lab-information font-fill-paragraph transition lab-font-size-16"></i>
                             </button>
                         </div>
@@ -148,7 +148,7 @@
                                             {{ textShortener(extra.name, 15) }}</h3>
                                         <h4 class="block text-xs font-medium text-heading">+{{
                                             extra.currency_price
-                                        }}</h4>
+                                            }}</h4>
                                     </div>
                                 </label>
                             </SwiperSlide>
@@ -216,6 +216,7 @@
                     </h3>
                     <textarea v-model="temp.instruction" :placeholder="$t('message.add_note')"
                         class="h-12 w-full rounded-lg border py-1.5 px-2 placeholder:text-[10px] placeholder:text-[#6E7191] border-[#D9DBE9]"></textarea>
+                    <small class="db-field-alert" v-if="instructionError">{{ instructionError }}</small>
                 </div>
                 <button type="button" :disabled="temp.total_price <= 0" @click.prevent="addToCart"
                     class="flex items-center justify-center gap-3 rounded-3xl text-base py-3 px-3 font-medium w-full text-white bg-primary">
@@ -288,6 +289,7 @@ export default {
                 total_price: 0,
                 instruction: "",
             },
+            instructionError: ""
         }
     },
     computed: {
@@ -611,6 +613,17 @@ export default {
                 }).catch();
             }
         },
+    },
+    watch: {
+        'temp.instruction'(val) {
+            if (val.length > 190) {
+                this.temp.instruction = val.slice(0, 190);
+                this.instructionError = this.$t("message.special_instructions_limit");
+            }
+            if (val.length < 190) {
+                this.instructionError = "";
+            }
+        }
     }
 
 }

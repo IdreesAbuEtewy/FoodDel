@@ -3,13 +3,14 @@
 namespace App\Services;
 
 
-use App\Enums\Activity;
-use App\Http\Requests\SiteRequest;
-use App\Models\Currency;
-use Dipokhalder\EnvEditor\EnvEditor;
 use Exception;
-use Illuminate\Support\Facades\Artisan;
+use App\Enums\Activity;
+use App\Models\Currency;
+use App\Http\Requests\SiteRequest;
 use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
+use Illuminate\Support\Facades\Artisan;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class SiteService
@@ -30,7 +31,7 @@ class SiteService
             return Settings::group('site')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -64,7 +65,7 @@ class SiteService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

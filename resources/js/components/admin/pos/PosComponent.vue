@@ -3,9 +3,9 @@
 
     <div class="md:w-[calc(100%-340px)] lg:w-[calc(100%-320px)] xl:w-[calc(100%-377px)]">
         <form @submit.prevent="search"
-            class="flex items-center w-full h-[38px] leading-[38px] mb-4 rounded-lg bg-white">
+            class="flex items-center w-full h-[38px] leading-[38px] mb-4 rounded-lg bg-white border-[#EFF0F6] border-t border-l border-b">
             <input type="text" v-model="props.search.name" :placeholder="$t('label.search_by_menu_item')"
-                class="w-full px-5 rounded-tl-lg rounded-bl-lg placeholder:text-xs placeholder:font-rubik placeholder:text-[#A0A3BD] border-[#EFF0F6] border-t border-l border-b">
+                class="w-full px-5 rounded-tl-lg rounded-bl-lg placeholder:text-xs placeholder:font-rubik placeholder:text-[#A0A3BD]">
             <button @click="resetName" type="button" v-if="props.search.name"
                 class="text-sm text-red-500 fa-regular fa-circle-xmark mr-4"></button>
             <button type="submit"
@@ -33,9 +33,15 @@
         </div>
         <ItemComponent :items="items" v-if="items.length > 0" />
 
-        <div class="mt-12" v-else>
+        <div class="my-12" v-else-if="items.length === 0 && !props.search.name">
+            <div class="max-w-[350px] mx-auto">
+                <img class="w-full mb-8" :src="setting.image_order_not_found" alt="image_order_not_found">
+            </div>
+            <span class="w-full mb-4 text-center text-black">{{ $t('message.no_data_available') }}</span>
+        </div>
+        <div class="my-12" v-else-if="items.length === 0 && props.search.name">
             <div class="max-w-[250px] mx-auto">
-                <img class="w-full mb-8" :src="setting.item_not_found" alt="image_order_not_found">
+                <img class="w-full mb-8" :src="setting.item_not_found" alt="item_not_found">
             </div>
             <span class="w-full mb-4 text-center text-black">{{ $t('message.no_items_found') }}</span>
         </div>
@@ -43,7 +49,7 @@
 
 
     <div id="pos-cart"
-        class="db-pos-cartDiv fixed top-0 ltr:right-0 rtl:left-0 w-full h-screen rounded-none z-50 md:z-10 md:top-[85px] ltr:md:right-5 rtl:md:left-5 md:w-[322px] lg:w-[305px] xl:w-[360px] md:h-[calc(100vh-85px)] md:rounded-lg overflow-y-auto thin-scrolling bg-white">
+        class="db-pos-cartDiv fixed top-0 ltr:right-0 rtl:left-0 w-full h-screen rounded-none z-50 md:z-10 md:top-[85px] ltr:md:right-5 rtl:md:left-5 md:w-[322px] lg:w-[305px] xl:w-[360px] md:h-[calc(100dvh-85px)] md:rounded-lg overflow-y-auto thin-scrolling bg-white">
         <div class="p-4">
             <div class="md:hidden text-right mb-3">
                 <button class="db-pos-cartCls" @click="closePosCart('pos-cart')">
@@ -81,7 +87,7 @@
                             <span class="custom-radio-span"></span>
                         </div>
                         <h3 class="db-field-label text-sm text-heading">
-                            Takeaway
+                            {{ $t('label.takeaway') }}
                         </h3>
                     </label>
                     <label ref="deliveryOrderLabel" @click="deliveryOrder" for="delivery"
@@ -94,7 +100,7 @@
                             <span class="custom-radio-span"></span>
                         </div>
                         <h3 class="db-field-label text-sm text-heading">
-                            Delivery
+                            {{ $t('label.delivery') }}
                         </h3>
                     </label>
                 </div>
@@ -137,6 +143,8 @@
                 </div>
             </div>
         </div>
+
+        <div class="max-h-[calc(100dvh_-_550px)] md:max-h-[calc(100dvh_-_600px)] h-auto thin-scrolling">
         <table class="w-full">
             <thead class="bg-primary-light">
                 <tr class="h-9">
@@ -168,7 +176,8 @@
                                     }}:
                                     &nbsp;</span>
                                 <span class="capitalize text-[10px] leading-4 font-rubik">{{ variation }}
-                                    <span v-if="index + 1 < cart.item_variations.names">, &nbsp;</span>
+                                    <span v-if="index + 1 < Object.keys(cart.item_variations.names).length">,
+                                        &nbsp;</span>
                                 </span>
                             </span>
                         </p>
@@ -215,6 +224,8 @@
                 </tr>
             </tbody>
         </table>
+        </div>
+
         <div class="p-4">
             <div class="flex h-[38px]" v-if="carts.length > 0">
                 <div class="dropdown-group">
@@ -891,7 +902,7 @@ export default {
             this.checkoutProps.form.dining_table_id = null;
             this.checkoutProps.form.address_id = null;
             this.selectedAddress = {};
-            this.checkoutProps.form.delivery_charge = null;
+            this.checkoutProps.form.delivery_charge = 0;
 
             this.$refs.takeAway.classList.add('active');
             this.$refs.deliveryOrderLabel.classList.remove('active');
@@ -938,6 +949,7 @@ export default {
                         user_id: address.user_id,
                     };
                     this.checkoutProps.form.address_id = null;
+                    this.checkoutProps.form.delivery_charge = 0;
                     this.selectedAddress = {};
                     if (this.address.form.label === this.$t("label.home")) {
                         this.address.status = false;
@@ -963,27 +975,43 @@ export default {
             }
             this.address.form.user_id = this.checkoutProps.form.customer_id;
             this.selectedAddress = {};
-            this.checkoutProps.form.delivery_charge = null;
+            this.checkoutProps.form.delivery_charge = 0;
         },
         updateSelectedAddress: function () {
             const address = this.customerAddresses.find((item) => item.id === this.checkoutProps.form.address_id);
             this.selectedAddress = address || {};
             this.deliveryChargeCalculation();
             if (this.checkoutProps.form.address_id === null) {
-                this.checkoutProps.form.delivery_charge = null;
+                this.checkoutProps.form.delivery_charge = 0;
             }
         },
         deliveryChargeCalculation: function () {
-            if (this.checkoutProps.form.order_type === orderTypeEnum.DELIVERY) {
-                if ((typeof this.selectedAddress.latitude !== 'undefined' && this.selectedAddress.latitude !== '') && (typeof this.selectedAddress.longitude !== 'undefined' && this.selectedAddress.longitude !== '') && (typeof this.location.lat !== 'undefined' && this.location.lat !== '') && (typeof this.location.lng !== 'undefined' && this.location.lng !== '')) {
-                    const distance = appService.distance(parseFloat(this.selectedAddress.latitude), parseFloat(this.selectedAddress.longitude), parseFloat(this.location.lat), parseFloat(this.location.lng));
+            if (this.checkoutProps.form.order_type === orderTypeEnum.DELIVERY && (typeof this.selectedAddress.latitude !== 'undefined' && this.selectedAddress.latitude !== '')) {
+                this.$store.dispatch("branch/showByLatLong", {
+                    branch_id: this.checkoutProps.form.branch_id,
+                    latitude: this.selectedAddress.latitude,
+                    longitude: this.selectedAddress.longitude
+                }).then((branchRes) => {
+                    const distance = appService.distance(parseFloat(this.selectedAddress.latitude), parseFloat(this.selectedAddress.longitude), parseFloat(branchRes.data.data.latitude), parseFloat(branchRes.data.data.longitude));
+
                     if (distance > this.setting.order_setup_free_delivery_kilometer) {
                         let extraDistance = distance - parseFloat(this.setting.order_setup_free_delivery_kilometer);
                         this.checkoutProps.form.delivery_charge = (extraDistance * parseFloat(this.setting.order_setup_charge_per_kilo) + parseFloat(this.setting.order_setup_basic_delivery_charge));
                     } else {
                         this.checkoutProps.form.delivery_charge = parseFloat(this.setting.order_setup_basic_delivery_charge);
                     }
-                }
+                }).catch((err) => {
+                    this.loading.isActive = false;
+                    this.selectedAddress = {};
+                    this.checkoutProps.form.address_id = null;
+                    this.checkoutProps.form.delivery_charge = 0;
+                    alertService.info(err.response.data.message);
+
+                });
+            } else {
+                this.selectedAddress = {};
+                this.checkoutProps.form.address_id = null;
+                this.checkoutProps.form.delivery_charge = 0;
             }
         },
     },

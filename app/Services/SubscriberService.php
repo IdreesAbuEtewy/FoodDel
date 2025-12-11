@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\SubscriberRequest;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\SubscriberEmailRequest;
 
 
@@ -65,7 +66,7 @@ class SubscriberService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -78,7 +79,7 @@ class SubscriberService
             $subscriber->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -97,7 +98,7 @@ class SubscriberService
             return $subscriber;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -106,14 +107,18 @@ class SubscriberService
      * @return Subscriber
      * @throws Exception
      */
-    public function sendEmail(SubscriberEmailRequest $request):void
+    public function sendEmail(SubscriberEmailRequest $request): void
     {
         try {
-            $subscribers        = Subscriber::select('email')->get();
-            Mail::bcc($subscribers)->send(new SubscriberMail($request->subject, $request->message));
+            $subscribers = Subscriber::pluck('email');
+
+            if ($subscribers->isNotEmpty()) {
+                Mail::bcc($subscribers->toArray())
+                    ->send(new SubscriberMail($request->subject, $request->message));
+            }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

@@ -51,7 +51,7 @@ class BranchService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -64,7 +64,7 @@ class BranchService
             return Branch::create($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -77,7 +77,7 @@ class BranchService
             return tap($branch)->update($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -107,7 +107,7 @@ class BranchService
             return $branch;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -120,7 +120,7 @@ class BranchService
             return $branch;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -145,7 +145,7 @@ class BranchService
             throw new Exception(trans('all.message.out_of_service_area'), 422);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -176,5 +176,27 @@ class BranchService
             }
         }
         return $intersections % 2 != 0;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function branchShowByLatLong(Request $request, Branch $branch)
+    {
+        try {
+            $branch = Branch::where('id', $branch->id)->whereNotNull('zone')->where('status', Status::ACTIVE)->first();
+            $userLatitude = $request->input('latitude');
+            $userLongitude = $request->input('longitude');
+            if ($branch) {
+                $zoneData = json_decode(json_decode($branch->zone, true), true);
+                if ($this->isPointInPolygon($zoneData, $userLatitude, $userLongitude)) {
+                    return $branch;
+                }
+            }
+            throw new Exception(trans('all.message.out_of_service_area'), 422);
+        } catch (Exception $exception) {
+            Log::info($exception->getMessage());
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
+        }
     }
 }

@@ -43,7 +43,14 @@
                 </div>
             </div>
 
-            <ItemComponent :items="items.items" :type="itemProps.type" :design="itemProps.design" />
+            <ItemComponent v-if="hasItems" :items="items.items" :type="itemProps.type" :design="itemProps.design" />
+
+            <div class="mt-12" v-else>
+                <div class="max-w-[250px] mx-auto">
+                    <img class="w-full mb-8" :src="setting.image_order_not_found" alt="image_order_not_found">
+                </div>
+                <span class="w-full mb-4 text-center text-black">{{ $t('message.no_data_available') }}</span>
+            </div>
         </div>
     </section>
 </template>
@@ -91,6 +98,10 @@ export default {
         },
         setting: function () {
             return this.$store.getters['frontendSetting/lists'];
+        },
+        hasItems() {
+            const list = this.items?.items;
+            return Array.isArray(list) ? list.length > 0 : !!(list && Object.keys(list).length);
         }
     },
     mounted() {

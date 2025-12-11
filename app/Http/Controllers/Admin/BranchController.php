@@ -83,4 +83,13 @@ class BranchController extends AdminController
             return response(['status' => false, 'message' => $exception->getMessage()], 422);
         }
     }
+
+    public function showByLatLong(Request $request, Branch $branch)
+    {
+        try {
+            return new BranchResource($this->branchService->branchShowByLatLong($request, $branch));
+        } catch (Exception $exception) {
+            return response(['status' => false, 'message' => $exception->getMessage()], 422);
+        }
+    }
 }

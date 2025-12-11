@@ -3,10 +3,11 @@
 namespace App\Services;
 
 
-use App\Http\Requests\OrderSetupRequest;
-use Dipokhalder\EnvEditor\EnvEditor;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
+use App\Http\Requests\OrderSetupRequest;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class OrderSetupService
@@ -27,7 +28,7 @@ class OrderSetupService
             return Settings::group('order_setup')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -41,7 +42,7 @@ class OrderSetupService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

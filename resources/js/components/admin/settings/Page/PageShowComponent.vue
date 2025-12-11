@@ -17,9 +17,7 @@
                     <label class="db-badge mb-3" :class="statusClass(page.status)">
                         {{ enums.statusEnumArray[page.status] }}
                     </label>
-                    <p v-html="page.description" class="db-light-text">
-
-                    </p>
+                    <div class="ql-editor" v-html="page.description"></div>
                 </div>
             </div>
         </div>
@@ -31,6 +29,7 @@ import LoadingComponent from "../../components/LoadingComponent";
 import statusEnum from "../../../../enums/modules/statusEnum";
 import alertService from "../../../../services/alertService";
 import appService from "../../../../services/appService";
+import 'vue3-quill/lib/vue3-quill.css';
 
 export default {
     name: "PageShowComponent",

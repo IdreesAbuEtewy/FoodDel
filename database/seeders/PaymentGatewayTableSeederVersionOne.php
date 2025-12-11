@@ -576,7 +576,7 @@ class PaymentGatewayTableSeederVersionOne extends Seeder
             "status"  => Activity::DISABLE,
             "options" => [
                 [
-                    "option"     => 'phonepe_merchant_id',
+                    "option"     => 'phonepe_client_id',
                     "type"       => InputType::TEXT,
                     "activities" => ''
                 ],
@@ -591,7 +591,7 @@ class PaymentGatewayTableSeederVersionOne extends Seeder
                     "activities" => ''
                 ],
                 [
-                    "option"     => 'phonepe_key',
+                    "option"     => 'phonepe_secret_key',
                     "type"       => InputType::TEXT,
                     "activities" => ''
                 ],
@@ -724,6 +724,116 @@ class PaymentGatewayTableSeederVersionOne extends Seeder
                 ],
             ]
         ],
+        [
+            "name"    => "Midtrans",
+            "slug"    => "midtrans",
+            "misc"    => null,
+            "status"  => Activity::DISABLE,
+            "options" => [
+                [
+                    "option"     => 'midtrans_server_key',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'midtrans_client_key',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'midtrans_mode',
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        GatewayMode::SANDBOX => 'sandbox',
+                        GatewayMode::LIVE    => 'live'
+                    ]
+                ],
+                [
+                    "option"     => 'midtrans_status',
+                    "value"      => Activity::DISABLE,
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        Activity::ENABLE  => "enable",
+                        Activity::DISABLE => "disable",
+                    ]
+                ],
+            ]
+        ],
+        [
+            "name"    => "MyFatoorah",
+            "slug"    => "myfatoorah",
+            "misc"    => null,
+            "status"  => Activity::DISABLE,
+            "options" => [
+                [
+                    "option"     => 'myfatoorah_api_key',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'myfatoorah_mode',
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        GatewayMode::SANDBOX => 'sandbox',
+                        GatewayMode::LIVE    => 'live'
+                    ]
+                ],
+                [
+                    "option"     => 'myfatoorah_status',
+                    "value"      => Activity::DISABLE,
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        Activity::ENABLE  => "enable",
+                        Activity::DISABLE => "disable",
+                    ]
+                ],
+            ]
+        ],
+        [
+            "name"    => "EasyPaisa",
+            "slug"    => "easypaisa",
+            "misc"    => null,
+            "status"  => Activity::DISABLE,
+            "options" => [
+                [
+                    "option"     => 'easypaisa_store_id',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_hash_key',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_username',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_password',
+                    "type"       => InputType::TEXT,
+                    "activities" => ''
+                ],
+                [
+                    "option"     => 'easypaisa_mode',
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        GatewayMode::SANDBOX => 'sandbox',
+                        GatewayMode::LIVE    => 'live'
+                    ]
+                ],
+                [
+                    "option"     => 'easypaisa_status',
+                    "value"      => Activity::DISABLE,
+                    "type"       => InputType::SELECT,
+                    "activities" => [
+                        Activity::ENABLE  => "enable",
+                        Activity::DISABLE => "disable",
+                    ]
+                ],
+            ]
+        ]
     ];
 
     public function run(): void

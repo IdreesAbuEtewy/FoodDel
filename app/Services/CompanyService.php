@@ -3,11 +3,12 @@
 namespace App\Services;
 
 
-use App\Http\Requests\CompanyRequest;
-use Dipokhalder\EnvEditor\EnvEditor;
 use Exception;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
+use App\Http\Requests\CompanyRequest;
+use Illuminate\Support\Facades\Artisan;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class CompanyService
@@ -29,7 +30,7 @@ class CompanyService
             return Settings::group('company')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -45,7 +46,7 @@ class CompanyService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

@@ -6,5 +6,5 @@ return [
     'loginUrl'              => 'https://inilabs.net/login',
     'activeLicense'         => 'https://inilabs.net/active-license',
     'itemId'                => '51692522',
-    'version'               => '2.0'
+    'version'               => '2.5'
 ];

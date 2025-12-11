@@ -2,14 +2,14 @@
 
 namespace App\Services;
 
-use App\Libraries\QueryExceptionLibrary;
 use Exception;
+use App\Models\Analytic;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
 use App\Http\Requests\AnalyticRequest;
 use App\Http\Requests\PaginateRequest;
-use App\Models\Analytic;
-use Dipokhalder\EnvEditor\EnvEditor;
+use App\Libraries\QueryExceptionLibrary;
 
 class AnalyticService
 {
@@ -53,7 +53,7 @@ class AnalyticService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -71,7 +71,7 @@ class AnalyticService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -89,7 +89,7 @@ class AnalyticService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -119,7 +119,7 @@ class AnalyticService
             return $analytic;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

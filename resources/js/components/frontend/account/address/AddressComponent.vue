@@ -36,6 +36,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="w-full p-4 text-center" v-else>
+                    <div class="max-w-[300px] mx-auto mt-2">
+                        <img class="w-full h-full" :src="ENV.API_URL + '/images/default/not-found.png'" alt="Not Found">
+                    </div>
+                    <span class="d-block mt-3 text-lg">{{ $t('message.no_data_available') }}</span>
+                </div>
             </div>
         </div>
     </address>
@@ -49,6 +55,7 @@ import AddressCreateComponent from "./AddressCreateComponent";
 import appService from "../../../../services/appService";
 import labelEnum from "../../../../enums/modules/labelEnum";
 import LoadingComponent from "../../components/LoadingComponent";
+import ENV from "../../../../config/env";
 
 export default {
     name: "AddressComponent",
@@ -81,6 +88,7 @@ export default {
                 switchLabel: "",
                 isMap: false,
             },
+            ENV: ENV
         }
     },
     mounted() {

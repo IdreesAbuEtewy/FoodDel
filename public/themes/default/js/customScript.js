@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dbMain.addEventListener('scroll', () => {
                 let scroll = dbMain.scrollTop;
                 if (scroll === 0) {
-                    subHeader.style.display = 'block';
+                    subHeader.style.display = 'flex';
                 } else {
                     subHeader.style.display = 'none';
                 }

@@ -5,10 +5,11 @@ namespace App\Services;
 
 use Exception;
 use App\Models\Item;
+use App\Models\ItemAddon;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\ItemAddonRequest;
-use App\Models\ItemAddon;
+use App\Libraries\QueryExceptionLibrary;
 
 class ItemAddonService
 {
@@ -43,7 +44,7 @@ class ItemAddonService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -56,7 +57,7 @@ class ItemAddonService
             return ItemAddon::create($request->validated() + ['item_id' => $item->id]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -73,7 +74,7 @@ class ItemAddonService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

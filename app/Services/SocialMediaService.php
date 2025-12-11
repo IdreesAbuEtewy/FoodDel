@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
-use App\Http\Requests\SocialMediaRequest;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
+use App\Http\Requests\SocialMediaRequest;
 
 class SocialMediaService
 {
@@ -19,7 +20,7 @@ class SocialMediaService
             return Settings::group('social_media')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -35,7 +36,7 @@ class SocialMediaService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

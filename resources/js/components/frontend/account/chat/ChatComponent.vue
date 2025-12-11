@@ -2,7 +2,7 @@
     <section class="pt-5 sm:py-6">
         <div class="container max-w-3xl px-0 sm:px-4">
             <div class="sm:rounded-xl sm:shadow-xs bg-white">
-                <div class="swiper branch-swiper p-2.5 border-b border-gray-200" v-if="branches.length > 1">
+                <div class="swiper branch-swiper !p-2.5 border-b border-gray-200" v-if="branches.length > 1">
 
                     <Swiper :speed="1000" slidesPerView="auto" :spaceBetween="16">
                         <SwiperSlide v-for="branch in branches" :key="branch" class="branch-navs !w-fit !relative">
@@ -22,7 +22,8 @@
                             <div class="chat-group">
                                 <div class="chat-group-text" v-if="message.text && message.image">
                                     <p class="chat-text">{{ message.text }}</p>
-                                    <p class="chat-text"><img class="w-full max-w-xs" :src="message.image" alt="images"></p>
+                                    <p class="chat-text"><img class="w-full max-w-xs" :src="message.image" alt="images">
+                                    </p>
                                 </div>
                                 <div class="chat-group-text" v-else>
                                     <p class="chat-text" v-if="message.text">{{ message.text }}</p>
@@ -40,7 +41,8 @@
                             <div class="chat-group">
                                 <div class="chat-group-text" v-if="message.text && message.image">
                                     <p class="chat-text">{{ message.text }}</p>
-                                    <p class="chat-text"><img class="w-full max-w-xs" :src="message.image" alt="images"></p>
+                                    <p class="chat-text"><img class="w-full max-w-xs" :src="message.image" alt="images">
+                                    </p>
                                 </div>
                                 <div class="chat-group-text" v-else>
                                     <p class="chat-text" v-if="message.text">{{ message.text }}</p>

@@ -254,7 +254,7 @@
                                 <i class="lab lab-mail lab-font-size-14"></i>
                                 <span class="text-xs">{{ orderUser.email }}</span>
                             </li>
-                            <li class="flex items-center gap-2.5">
+                            <li class="flex items-center gap-2.5" v-if="orderUser.phone">
                                 <i class="lab lab-call-calling-linear lab-font-size-14"></i>
                                 <span class="text-xs" dir="ltr">{{ orderUser.country_code + '' + orderUser.phone
                                     }}</span>

@@ -1,13 +1,14 @@
 <?php 
 namespace App\Services;
-use App\Http\Requests\PWARequest;
-use App\Models\PWASetting;
 use Exception;
-use Illuminate\Support\Facades\Log;
-use Smartisan\Settings\Facades\Settings;
-use Illuminate\Support\Facades\Config;
-use Dipokhalder\EnvEditor\EnvEditor;
 use App\Models\PWA;
+use App\Models\PWASetting;
+use App\Http\Requests\PWARequest;
+use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
+use Illuminate\Support\Facades\Config;
+use App\Libraries\QueryExceptionLibrary;
+use Smartisan\Settings\Facades\Settings;
 
 
 class PWAService {
@@ -29,7 +30,7 @@ class PWAService {
               return PWA::first();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -156,7 +157,7 @@ class PWAService {
             return $pwa;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

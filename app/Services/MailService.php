@@ -2,11 +2,12 @@
 
 namespace App\Services;
 
-use App\Http\Requests\MailRequest;
-use Dipokhalder\EnvEditor\EnvEditor;
 use Exception;
-use Illuminate\Support\Facades\Artisan;
+use App\Http\Requests\MailRequest;
 use Illuminate\Support\Facades\Log;
+use Dipokhalder\EnvEditor\EnvEditor;
+use Illuminate\Support\Facades\Artisan;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class MailService
@@ -27,7 +28,7 @@ class MailService
             return Settings::group('mail')->all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -52,7 +53,7 @@ class MailService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

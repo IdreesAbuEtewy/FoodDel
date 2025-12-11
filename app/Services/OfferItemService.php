@@ -9,6 +9,7 @@ use App\Models\OfferItem;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\PaginateRequest;
 use App\Http\Requests\OfferItemRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class OfferItemService
 {
@@ -43,7 +44,7 @@ class OfferItemService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -69,7 +70,7 @@ class OfferItemService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -86,7 +87,7 @@ class OfferItemService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

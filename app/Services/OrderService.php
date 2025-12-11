@@ -32,6 +32,7 @@ use App\Http\Requests\PosOrderRequest;
 use App\Events\SendOrderDeliveryBoySms;
 use App\Events\SendOrderDeliveryBoyMail;
 use App\Events\SendOrderDeliveryBoyPush;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 use App\Http\Requests\OrderStatusRequest;
 use App\Http\Requests\PaymentStatusRequest;
@@ -120,7 +121,7 @@ class OrderService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -156,7 +157,7 @@ class OrderService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -193,7 +194,7 @@ class OrderService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -230,7 +231,7 @@ class OrderService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -327,7 +328,7 @@ class OrderService
         } catch (Exception $exception) {
             DB::rollBack();
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -420,7 +421,7 @@ class OrderService
         } catch (Exception $exception) {
             DB::rollBack();
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -446,7 +447,7 @@ class OrderService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -463,7 +464,7 @@ class OrderService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -480,7 +481,7 @@ class OrderService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -497,7 +498,7 @@ class OrderService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -519,7 +520,7 @@ class OrderService
             return $orderCountArray;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -542,7 +543,7 @@ class OrderService
             return $order;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -600,7 +601,7 @@ class OrderService
             return $order;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -625,7 +626,7 @@ class OrderService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -657,7 +658,7 @@ class OrderService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -676,7 +677,7 @@ class OrderService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -702,8 +703,19 @@ class OrderService
                     if (in_array($key, $this->orderFilter)) {
                         if ($key === "status") {
                             $query->where($key, (int)$request);
-                        } else if ($key === 'payment_method' && (int)$request < 0) {
-                            $query->where('pos_payment_method', abs($request));
+                        } else if ($key === 'payment_method') {
+                            if ((int)$request > 0) {
+                                if ((int)$request === 1) {
+                                    $query->where('payment_method', 1)->where('pos_payment_method', null)->whereDoesntHave('transaction');
+                                } else {
+                                    $paymentGateway = PaymentGateway::findOrFail((int)$request);
+                                    $query->whereHas('transaction', function ($q) use ($paymentGateway) {
+                                        $q->where('payment_method', $paymentGateway->slug);
+                                    });
+                                }
+                            } else {
+                                $query->where('pos_payment_method', abs((int)$request));
+                            }
                         } else if ($key === 'source') {
                             $query->where($key, $request);
                         } else {
@@ -731,7 +743,7 @@ class OrderService
             return $salesReportArray;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

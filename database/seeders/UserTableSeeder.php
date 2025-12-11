@@ -72,9 +72,9 @@ class UserTableSeeder extends Seeder
             Address::create([
                 'label'     => 'Home',
                 'address'   => 'Dhaka Bangladesh',
-                'apartment' => rand(0, 999) . ', Mirpur 2',
-                'latitude'  => '23.7873',
-                'longitude' => '90.3514',
+                'apartment' => rand(0, 999) . ', Mirpur 1',
+                'latitude'  => '23.7956',
+                'longitude' => '90.3537',
                 'user_id'   => $customer->id,
             ]);
             Address::create([

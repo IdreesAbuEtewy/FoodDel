@@ -25,6 +25,19 @@ class LanguageTableSeeder extends Seeder
             'status'            => Status::ACTIVE
         ];
 
+        $banglaLanguageArray = [
+            'name'              => 'Bangla',
+            'code'              => 'bn',
+            'display_mode'      => DisplayMode::LTR,
+            'status'            => Status::ACTIVE
+        ];
+
+        $germanLanguageArray = [
+            'name'              => 'German',
+            'code'              => 'de',
+            'display_mode'      => DisplayMode::LTR,
+            'status'            => Status::ACTIVE
+        ];
 
         $arabicLanguageArray = [
             'name'              => 'Arabic',
@@ -36,6 +49,16 @@ class LanguageTableSeeder extends Seeder
         $englishLanguage = Language::create($englishLanguageArray);
         if (file_exists(public_path('/images/language/english.png'))) {
             $englishLanguage->addMedia(public_path('/images/language/english.png'))->preservingOriginal()->toMediaCollection('language');
+        }
+
+        $banglaLanguage = Language::create($banglaLanguageArray);
+        if (file_exists(public_path('/images/language/bangla.png'))) {
+            $banglaLanguage->addMedia(public_path('/images/language/bangla.png'))->preservingOriginal()->toMediaCollection('language');
+        }
+
+        $germanLanguage = Language::create($germanLanguageArray);
+        if (file_exists(public_path('/images/language/german.png'))) {
+            $germanLanguage->addMedia(public_path('/images/language/german.png'))->preservingOriginal()->toMediaCollection('language');
         }
 
         $arabicLanguage = Language::create($arabicLanguageArray);

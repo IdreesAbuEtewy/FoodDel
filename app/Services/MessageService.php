@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Enums\Ask;
 use Exception;
+use App\Enums\Ask;
 use App\Models\User;
 use App\Models\Message;
 use Illuminate\Support\Arr;
@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\MessageRequest;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class MessageService
 {
@@ -34,7 +35,7 @@ class MessageService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -69,7 +70,7 @@ class MessageService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -87,7 +88,7 @@ class MessageService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -100,7 +101,7 @@ class MessageService
             return $message;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -110,7 +111,7 @@ class MessageService
             MessageHistory::where(['message_id' => $message->id, 'user_id' => $customer->id, 'is_read' => Ask::NO])->update(['is_read' => Ask::YES]);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

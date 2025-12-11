@@ -5,6 +5,7 @@ namespace App\Services;
 
 use Exception;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 use PragmaRX\Countries\Package\Countries;
 
 class CountryCodeService
@@ -27,7 +28,7 @@ class CountryCodeService
             return ['data' => $countryArray];
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -40,7 +41,7 @@ class CountryCodeService
             return Countries::where('cca3', $country)->first();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

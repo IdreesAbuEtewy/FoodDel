@@ -4,14 +4,14 @@
     <div id="orderpayment" class="modal">
         <div class="modal-dialog max-w-[428px] w-full">
             <div class="modal-header pb-3 border-b border-[#D9DBE9]">
-                <h3 class="capitalize font-medium">Order Payment</h3>
+                <h3 class="capitalize font-medium">{{ $t('label.order_payment') }}</h3>
                 <button class="modal-close fa-regular fa-circle-xmark" @click="reset"></button>
             </div>
             <div class="modal-body">
                 <div class="mb-4">
                     <div
                         class="flex justify-between items-center h-12 w-full rounded-lg py-1.5 px-2 placeholder:text-[10px] placeholder:text-[#6E7191] bg-[#F7F7FC]">
-                        <span class="text-sm font-normal text-[#2E2F38]">Total Amount</span>
+                        <span class="text-sm font-normal text-[#2E2F38]">{{ $t('label.total_amount') }}</span>
                         <span class="text-primary text-base font-medium">{{
                             currencyFormat(props.form.total,
                                 setting.site_digit_after_decimal_point, setting.site_default_currency_symbol,
@@ -20,7 +20,7 @@
                     </div>
                 </div>
                 <div class="mb-4">
-                    <h3 class="capitalize font-medium mb-2">Select Payment Method</h3>
+                    <h3 class="capitalize font-medium mb-2">{{ $t('label.select_payment_method') }}</h3>
                     <nav class="flex flex-wrap gap-4 active-group">
                         <button data-tab="#cash" type="button"
                             class="other-tabBtn w-fit flex flex-col items-center gap-2 rounded-lg py-3 px-7 border bg-[#F7F7FC] border-[#F7F7FC]"
@@ -42,7 +42,7 @@
                             @click="paymentMethod(posPaymentMethodEnum.MOBILE_BANKING)">
                             <i class="lab lab-mfs lab-font-size-24"></i>
                             <span class="text-xs font-normal leading-none text-heading">{{ $t("label.mobile_banking")
-                                }}</span>
+                            }}</span>
                         </button>
                         <button data-tab="#otherpay" type="button" onclick="createkeyboard('otherpay')"
                             class="other-tabBtn w-fit flex flex-col items-center gap-2 rounded-lg py-3 px-7 border bg-[#F7F7FC] border-[#F7F7FC]"
@@ -131,8 +131,8 @@
                         class="num bg-[#F7F7FC] rounded-lg p-2.5 flex items-center justify-center text-base font-medium text-[#1F1F39]">.</button>
                 </div>
                 <button @click="confirmOrder" type="button"
-                    class="rounded-3xl text-base py-2 px-3 font-medium w-full text-white bg-primary">Confirm & Print
-                    Reciept</button>
+                    class="rounded-3xl text-base py-2 px-3 font-medium w-full text-white bg-primary">{{
+                        $t('button.confirm_and_print') }}</button>
             </div>
         </div>
     </div>

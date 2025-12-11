@@ -5,8 +5,7 @@
             <img class="w-full" :src="setting.theme_logo" alt="logo">
         </router-link>
         <div class="flex items-center justify-end w-full gap-4">
-            <div
-                class="sub-header flex items-center gap-4 transition xh:justify-between xh:fixed xh:left-0 xh:w-full xh:p-4 xh:border-y xh:border-[#EFF0F6] xh:bg-white">
+            <div class="sub-header flex items-center gap-4 transition justify-between xh:top-10 xh:fixed xh:left-0 xh:w-full xh:p-4 xh:border-y xh:border-[#EFF0F6] xh:bg-white">
                 <button v-if="$route.path.includes('order-status-screen')" type="button" @click="fullScreen"
                     class="hidden db-header-toggle lg:flex items-center justify-center w-9 h-9 px-3 rounded-lg bg-[#E0FFED]">
                     <i class="lab lab-maximize-2 lab-font-size-24 text-[#1AB759]"></i>
@@ -88,7 +87,7 @@
                     <i class="lab lab-arrow-down text-xs ml-1.5 lab-font-size-14"></i>
                 </button>
                 <div
-                    class="dropdown-list fixed sm:absolute top-[75px] sm:top-12 ltr:right-0 rtl:left-0 z-[60] rounded-xl w-full h-[calc(100vh_-_75px)] overflow-y-auto sm:h-auto sm:w-[360px] p-4 shadow-paper bg-white transition-all duration-300 scale-y-0 origin-top">
+                    class="dropdown-list fixed sm:absolute top-[75px] sm:top-12 ltr:right-0 rtl:left-0 z-[60] rounded-xl w-full h-[calc(100dvh_-_75px)] overflow-y-auto sm:h-auto sm:w-[360px] p-4 shadow-paper bg-white transition-all duration-300 scale-y-0 origin-top">
                     <div class="w-fit mx-auto text-center mb-5">
                         <figure
                             class="relative z-10 w-[98px] h-[98px] border-2 border-dashed rounded-full inline-flex items-center justify-center border-white bg-gradient-to-t from-[#FF7A00] to-[#FF016C] before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:w-24 before:h-24 before:rounded-full before:-z-10 before:bg-white">

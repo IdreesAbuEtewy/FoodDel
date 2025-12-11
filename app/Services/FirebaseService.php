@@ -14,7 +14,7 @@ class FirebaseService
 {
     public $filePath;
 
-    public function sendNotification($data, $fcmTokens, $topicName): void 
+    public function sendNotification($data, $fcmTokens, $topicName): void
     {
 
         try {
@@ -53,11 +53,13 @@ class FirebaseService
                     ],
                 ];
 
-
-                $result = $client->post($url, [
-                    'headers' => $headers,
-                    "body"    => json_encode($payload)
-                ]);
+                try {
+                    $client->post($url, [
+                        'headers' => $headers,
+                        "body"    => json_encode($payload)
+                    ]);
+                } catch (\Throwable $th) {
+                }
             }
         } catch (Exception $e) {
             Log::info($e->getMessage());

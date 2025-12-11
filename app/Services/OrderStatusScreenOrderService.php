@@ -6,11 +6,12 @@ use Exception;
 use App\Enums\Ask;
 use Carbon\Carbon;
 use App\Models\Item;
+use App\Enums\Source;
 use App\Enums\Status;
 use App\Models\Order;
 use App\Enums\OrderStatus;
-use App\Enums\Source;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 
 class OrderStatusScreenOrderService
 {
@@ -44,7 +45,7 @@ class OrderStatusScreenOrderService
             })->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -54,7 +55,7 @@ class OrderStatusScreenOrderService
             return Item::with('media', 'category', 'offer')->withCount('orders')->where(['status' => Status::ACTIVE])->orderBy('orders_count', 'desc')->limit(9)->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

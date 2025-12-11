@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Events\SendOrderMail;
 use App\Events\SendOrderPush;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 use App\Http\Requests\OrderStatusRequest;
 
 class KitchenDisplaySystemOrderService
@@ -68,7 +69,7 @@ class KitchenDisplaySystemOrderService
             })->orderBy($orderColumn, $orderType)->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -85,7 +86,7 @@ class KitchenDisplaySystemOrderService
             $order->save();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -123,7 +124,7 @@ class KitchenDisplaySystemOrderService
             return $mergedItems;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

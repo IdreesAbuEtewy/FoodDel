@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
-use App\Libraries\AppLibrary;
-use App\Models\Menu;
 use Exception;
-use Illuminate\Support\Facades\Log;
-use Spatie\Permission\Models\Permission;
+use App\Models\Menu;
+use App\Libraries\AppLibrary;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
+use Spatie\Permission\Models\Permission;
 
 class MenuService
 {
@@ -30,7 +31,7 @@ class MenuService
             return AppLibrary::numericToAssociativeArrayBuilder(AppLibrary::menu($menus, $permissions));
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

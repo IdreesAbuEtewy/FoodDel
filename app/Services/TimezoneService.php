@@ -2,9 +2,10 @@
 
 namespace App\Services;
 
-use DateTimeZone;
 use Exception;
+use DateTimeZone;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 
 class TimezoneService
 {
@@ -27,7 +28,7 @@ class TimezoneService
             return collect($timezoneArray);
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

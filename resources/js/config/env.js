@@ -1,7 +1,7 @@
 const ENV = {
-    API_URL: APP_URL,
-    API_KEY: APP_KEY,
-    GOOGLE_MAP_KEY: GOOGLE_TOKEN,
-    DEMO: APP_DEMO
+    API_URL: process.env.MIX_HOST,
+    API_KEY: process.env.MIX_API_KEY,
+    GOOGLE_MAP_KEY: process.env.MIX_GOOGLE_MAP_KEY,
+    DEMO: process.env.MIX_DEMO
 };
 export default ENV;

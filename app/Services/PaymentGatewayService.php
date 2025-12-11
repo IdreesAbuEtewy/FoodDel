@@ -2,14 +2,15 @@
 
 namespace App\Services;
 
-use App\Enums\GatewayMode;
 use Exception;
+use App\Enums\GatewayMode;
 use App\Models\GatewayOption;
 use App\Models\PaymentGateway;
 use Illuminate\Support\Facades\Log;
 use Dipokhalder\EnvEditor\EnvEditor;
 use App\Http\Requests\PaginateRequest;
 use Illuminate\Support\Facades\Artisan;
+use App\Libraries\QueryExceptionLibrary;
 
 
 class PaymentGatewayService
@@ -65,7 +66,7 @@ class PaymentGatewayService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -95,7 +96,7 @@ class PaymentGatewayService
             return $this->gateway;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

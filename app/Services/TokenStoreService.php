@@ -6,6 +6,7 @@ use Exception;
 use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\TokenStoreRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class TokenStoreService
 {
@@ -24,7 +25,7 @@ class TokenStoreService
             return true;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
     /**
@@ -41,7 +42,7 @@ class TokenStoreService
             return true;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

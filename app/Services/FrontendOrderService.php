@@ -3,8 +3,6 @@
 namespace App\Services;
 
 
-use App\Events\SendOrderGotMail;
-use App\Events\SendOrderGotSms;
 use Exception;
 use App\Models\Tax;
 use App\Models\Item;
@@ -20,14 +18,17 @@ use App\Events\SendOrderMail;
 use App\Events\SendOrderPush;
 use App\Libraries\AppLibrary;
 use App\Models\FrontendOrder;
+use App\Events\SendOrderGotSms;
+use App\Events\SendOrderGotMail;
+use App\Events\SendOrderGotPush;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 use App\Http\Requests\OrderStatusRequest;
-use App\Events\SendOrderGotPush;
 
 class FrontendOrderService
 {
@@ -86,7 +87,7 @@ class FrontendOrderService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -186,7 +187,7 @@ class FrontendOrderService
         } catch (Exception $exception) {
             DB::rollBack();
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -202,7 +203,7 @@ class FrontendOrderService
             return [];
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -235,7 +236,7 @@ class FrontendOrderService
             return $frontendOrder;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

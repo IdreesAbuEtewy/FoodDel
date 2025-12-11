@@ -4,10 +4,11 @@ namespace App\Services;
 
 
 use Exception;
-use Illuminate\Support\Facades\Log;
-use App\Http\Requests\PaginateRequest;
-use App\Http\Requests\SliderRequest;
 use App\Models\Slider;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\SliderRequest;
+use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 class SliderService
 {
@@ -53,7 +54,7 @@ class SliderService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -70,7 +71,7 @@ class SliderService
             return $slider;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -88,7 +89,7 @@ class SliderService
             return $slider;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -101,7 +102,7 @@ class SliderService
             $slider->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -114,7 +115,7 @@ class SliderService
             return $slider;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

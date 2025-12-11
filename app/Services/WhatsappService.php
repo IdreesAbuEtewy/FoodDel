@@ -1,10 +1,11 @@
 <?php 
 namespace App\Services;
-use App\Models\WhatsappOrderSetup;
 use Exception;
+use App\Models\WhatsappOrderSetup;
 use Illuminate\Support\Facades\Log;
 use Dipokhalder\EnvEditor\EnvEditor;
 use App\Http\Requests\WhatsappRequest;
+use App\Libraries\QueryExceptionLibrary;
 use Smartisan\Settings\Facades\Settings;
 
 class WhatsappService {
@@ -23,7 +24,7 @@ class WhatsappService {
             return WhatsappOrderSetup::with('branch')->get();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -37,7 +38,7 @@ class WhatsappService {
             return WhatsappOrderSetup::create($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -50,7 +51,7 @@ class WhatsappService {
             return tap($whatsappOrderSetup)->update($request->validated());
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -60,7 +61,7 @@ class WhatsappService {
             return $whatsappOrderSetup->delete();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -72,7 +73,7 @@ class WhatsappService {
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

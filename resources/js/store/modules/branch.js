@@ -48,9 +48,9 @@ export const branch = {
                     }
                     resolve(res);
                 })
-                .catch((err) => {
-                    reject(err);
-                });
+                    .catch((err) => {
+                        reject(err);
+                    });
             });
         },
         save: function (context, payload) {
@@ -122,6 +122,20 @@ export const branch = {
         },
         reset: function (context) {
             context.commit("reset");
+        },
+
+        showByLatLong: function (context, payload) {
+            return new Promise((resolve, reject) => {
+                let url = `/admin/setting/branch/lat-long/${payload.branch_id}`;
+                if (payload) {
+                    url = url + appService.requestHandler(payload);
+                }
+                axios.get(url).then((res) => {
+                    resolve(res);
+                }).catch((err) => {
+                    reject(err);
+                });
+            });
         },
     },
     mutations: {

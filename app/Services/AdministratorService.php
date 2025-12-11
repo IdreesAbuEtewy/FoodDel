@@ -2,19 +2,20 @@
 
 namespace App\Services;
 
-use App\Enums\Ask;
-use App\Enums\Role as EnumRole;
-use App\Http\Requests\AdministratorRequest;
-use App\Http\Requests\ChangeImageRequest;
-use App\Http\Requests\PaginateRequest;
-use App\Http\Requests\UserChangePasswordRequest;
-use App\Libraries\AppLibrary;
-use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\Auth;
+use App\Enums\Ask;
+use App\Models\User;
+use App\Libraries\AppLibrary;
+use App\Enums\Role as EnumRole;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
+use App\Http\Requests\ChangeImageRequest;
+use App\Http\Requests\AdministratorRequest;
+use App\Http\Requests\UserChangePasswordRequest;
 
 class AdministratorService
 {
@@ -48,7 +49,7 @@ class AdministratorService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -77,7 +78,7 @@ class AdministratorService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -105,7 +106,7 @@ class AdministratorService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -131,7 +132,7 @@ class AdministratorService
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
             DB::rollBack();
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -149,7 +150,7 @@ class AdministratorService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -168,7 +169,7 @@ class AdministratorService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -187,7 +188,7 @@ class AdministratorService
             }
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

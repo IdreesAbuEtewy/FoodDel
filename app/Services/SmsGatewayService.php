@@ -3,12 +3,13 @@
 namespace App\Services;
 
 
-use App\Http\Requests\PaginateRequest;
-use App\Models\GatewayOption;
-use App\Models\SmsGateway;
 use Exception;
-use Illuminate\Support\Facades\Log;
+use App\Models\SmsGateway;
 use Illuminate\Http\Request;
+use App\Models\GatewayOption;
+use Illuminate\Support\Facades\Log;
+use App\Http\Requests\PaginateRequest;
+use App\Libraries\QueryExceptionLibrary;
 
 
 class SmsGatewayService
@@ -57,7 +58,7 @@ class SmsGatewayService
             );
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -89,7 +90,7 @@ class SmsGatewayService
             return $this->gateway;
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }

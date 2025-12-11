@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Http\Request;
 use App\Models\NotificationAlert;
 use Illuminate\Support\Facades\Log;
+use App\Libraries\QueryExceptionLibrary;
 
 class NotificationAlertService
 {
@@ -19,7 +20,7 @@ class NotificationAlertService
             return NotificationAlert::all();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 
@@ -68,7 +69,7 @@ class NotificationAlertService
             return $this->list();
         } catch (Exception $exception) {
             Log::info($exception->getMessage());
-            throw new Exception($exception->getMessage(), 422);
+            throw new Exception(QueryExceptionLibrary::message($exception), 422);
         }
     }
 }
